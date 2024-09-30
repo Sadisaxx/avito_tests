@@ -25,13 +25,12 @@ def test_back_five_pages(page: Page):
     page.goto(base_url)
     page.get_by_title(PaginationLocators.NEXT_FIVE_PAGES).nth(1).click()
     page.get_by_title(PaginationLocators.PREV_FIVE_PAGES).nth(1).click()
-    expect(page.get_by_title('1').first).to_have_class(re.compile(PaginationLocators.ACTIVE_PAGE_CLASS))
-    expect(page.get_by_title("1").nth(2)).to_have_class(re.compile(PaginationLocators.ACTIVE_PAGE_CLASS))
+    expect(page.get_by_role('listitem').nth(1)).to_have_class(re.compile(PaginationLocators.ACTIVE_PAGE_CLASS))
 
 def test_next_page_to_be_disabled(page: Page):
     page.goto(base_url)
-    page.get_by_role("listitem", name="40").first.click()
-    expect(page.get_by_role("listitem", name="40").first).to_have_class(re.compile(PaginationLocators.ACTIVE_PAGE_CLASS))
-    expect(page.get_by_role("listitem", name="40").last).to_have_class(re.compile(PaginationLocators.ACTIVE_PAGE_CLASS))
+    page.get_by_role("listitem").nth(7).click()
+    expect(page.get_by_role("listitem").nth(7)).to_have_class(re.compile(PaginationLocators.ACTIVE_PAGE_CLASS))
+    expect(page.get_by_role("listitem").nth(18)).to_have_class(re.compile(PaginationLocators.ACTIVE_PAGE_CLASS))
     expect(page.locator(PaginationLocators.PAGINATION_ARROW_BUTTON).nth(1)).to_be_disabled()
     expect(page.locator(PaginationLocators.PAGINATION_ARROW_BUTTON).nth(3)).to_be_disabled()
